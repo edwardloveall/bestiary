@@ -48,15 +48,7 @@ monster = Monster.new(basic: basic)
 
 db = PG.connect(dbname: 'bestiary')
 
-value_placeholders = (1..basic.attributes.values.count).map { |n| "$#{n}" }
-sql = <<-SQL
-  INSERT INTO basic_attrs
-  (#{basic.attributes.keys.join(', ')})
-  VALUES (#{value_placeholders.join(', ')})
-  RETURNING id
-SQL
-
-result = db.exec_params(sql, basic.attributes.values)
+result = db.exec_params(basic.to_sql, basic.values)
 basic_id = result.field_values('id').first
 
 sql = <<-SQL
