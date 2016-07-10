@@ -1,12 +1,12 @@
 class Attributes::Basic
   attr_reader :name, :cr, :xp,
               :alignment, :size, :type,
-              :initiative, :senses, :perception,
+              :initiative, :senses,
               :aura
 
   def initialize(name:, cr:, xp:,
                  alignment:, size:, type:,
-                 initiative:, senses: '', perception: '',
+                 initiative:, senses: '',
                  aura: '')
     @name = name
     @cr = cr
@@ -30,7 +30,6 @@ class Attributes::Basic
       type: type,
       initiative: initiative,
       senses: senses,
-      perception: perception,
       aura: aura
     }
   end
