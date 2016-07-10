@@ -1,19 +1,19 @@
 class Parsers::Senses
   ATTRIBUTE_REGEXS = [
-    /(?<title>Perception) (?<value>(\+|-)\d+)/i,
-    /(?<title>blindsense) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>blindsight) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>darkvision) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>greensight) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>keen scent)/i,
-    /(?<title>lifesense)/i,
-    /(?<title>low-light vision)/i,
-    /(?<title>mistsight)/i,
-    /(?<title>scent)/i,
-    /(?<title>see in darkness)/i,
-    /(?<title>thoughtsense) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>tremorsense) (?<value>\d+) (?<unit>ft\.)/i,
-    /(?<title>x-ray vision)/i
+    /(Perception) ((\+|-)\d+)/i,
+    /(blindsense) (\d+) (ft\.)/i,
+    /(blindsight) (\d+) (ft\.)/i,
+    /(darkvision) (\d+) (ft\.)/i,
+    /(greensight) (\d+) (ft\.)/i,
+    /(keen scent)/i,
+    /(lifesense)/i,
+    /(low-light vision)/i,
+    /(mistsight)/i,
+    /(scent)/i,
+    /(see in darkness)/i,
+    /(thoughtsense) (\d+) (ft\.)/i,
+    /(tremorsense) (\d+) (ft\.)/i,
+    /(x-ray vision)/i
   ].freeze
 
   attr_reader :creature
