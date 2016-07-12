@@ -1,15 +1,4 @@
 class Parsers::Aura
-  AURA_REGEXS = [
-    /(?<title>emotion) \((DC (?<dc>\d+))\)/i,
-    /(?<title>fear aura) \(((?<feet>\d+) ft.), (DC (?<dc>\d+))\)/i,
-    /(?<title>frightful presence) \(((?<feet>\d+) ft.), (DC (?<dc>\d+))\)/i,
-    /(?<title>mental static) \((DC (?<dc>\d+))\)/i,
-    /(?<title>stench) \((DC (?<dc>\d+)), ((?<rounds>\d+) rounds)\)/i,
-    /(?<title>unnatural aura) \(((?<feet>\d+) ft.)\)/i,
-    /(?<title>faithlessness) \(((?<feet>\d+) ft.)\)/i
-  ].freeze
-  INTEGER_KEYS = [:feet, :dc, :rounds].freeze
-
   attr_reader :creature
 
   def self.perform(creature)
@@ -22,9 +11,15 @@ class Parsers::Aura
 
   def perform
     parent = parent_element
-    return if parent.nil?
-    text = aura_text(parent)
-    Attributes::Aura.new(aura_attributes(text))
+    return [] if parent.nil?
+    auras = aura_texts(parent)
+    auras.map do |aura|
+      if contains_attributes?(aura)
+        Attributes::Aura.new(aura_attributes(aura))
+      else
+        Attributes::Aura.new(title: aura)
+      end
+    end
   end
 
   def parent_element
@@ -38,20 +33,52 @@ class Parsers::Aura
     return nil
   end
 
-  def aura_text(element)
-    element.text.split('Aura').last
+  def aura_texts(element)
+    all_text = element.text.split('Aura').last
+    auras = all_text.split(',')
+    auras.map(&:strip)
+  end
+
+  def contains_attributes?(text)
+    text.include?('(')
   end
 
   def aura_attributes(text)
-    AURA_REGEXS.each do |regex|
-      match = regex.match(text)
-      if match
-        keys = match.names.map(&:to_sym)
-        values = match.captures
-        values[1..-1] = values[1..-1].map(&:to_i)
-        return keys.zip(values).to_h
-      end
+    attribtes = {}
+    attribtes[:title] = text.split('(').first.strip
+    attribtes.merge!(feet_parser(text))
+    attribtes.merge!(dc_parser(text))
+    attribtes.merge!(rounds_parser(text))
+    if !attribtes[:title].nil?
+      return attribtes
     end
     puts "could not match aura: #{text}"
+  end
+
+  def feet_parser(text)
+    match = text.match(/(\d+) (feet|ft\.)/i)
+    if match
+      { feet: match[1].to_i }
+    else
+      {}
+    end
+  end
+
+  def dc_parser(text)
+    match = text.match(/DC (\d+)/i)
+    if match
+      { dc: match[1].to_i }
+    else
+      {}
+    end
+  end
+
+  def rounds_parser(text)
+    match = text.match(/(\d.+) rounds/i)
+    if match
+      { rounds: match[1] }
+    else
+      {}
+    end
   end
 end
