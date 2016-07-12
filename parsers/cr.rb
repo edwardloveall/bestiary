@@ -1,6 +1,13 @@
 class Parsers::Cr
   def self.perform(creature)
-    cr_string = creature.at('.stat-block-cr').text
-    cr_string.gsub(/(CR )/, '').to_i
+    bold_elements = creature.css('b')
+    bold_elements.each do |bold|
+      if bold.text.match('CR ')
+        cr_string = bold.text.gsub(/[^\d]/, '')
+        return cr_string.to_i
+      end
+    end
+
+    raise 'could not parse CR'
   end
 end
