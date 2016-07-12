@@ -1,7 +1,7 @@
 module Parsers
 end
 
-require 'parsers/monster'
+require 'parsers/creature'
 require 'parsers/name'
 require 'parsers/cr'
 require 'parsers/xp'
