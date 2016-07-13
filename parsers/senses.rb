@@ -4,6 +4,7 @@ class Parsers::Senses
     /(blindsense) (\d+) (ft\.)/i,
     /(blindsight) (\d+) (ft\.)/i,
     /(darkvision) (\d+) (ft\.)/i,
+    /(detect .+)/i,
     /(greensight) (\d+) (ft\.)/i,
     /(keen scent)/i,
     /(lifesense)/i,
@@ -13,6 +14,7 @@ class Parsers::Senses
     /(see in darkness)/i,
     /(thoughtsense) (\d+) (ft\.)/i,
     /(tremorsense) (\d+) (ft\.)/i,
+    /(true seeing)/,
     /(x-ray vision)/i
   ].freeze
 
