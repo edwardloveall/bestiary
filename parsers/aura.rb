@@ -1,4 +1,10 @@
 class Parsers::Aura
+  AURA_REGEXES = {
+    feet: /(\d+) (feet|ft\.)/i,
+    dc: /DC (\d+)/i,
+    rounds: /(\d.+) rounds/i
+  }.freeze
+
   attr_reader :creature
 
   def self.perform(creature)
@@ -35,7 +41,7 @@ class Parsers::Aura
 
   def aura_texts(element)
     all_text = element.text.split('Aura').last
-    auras = all_text.split(',')
+    auras = all_text.split('),')
     auras.map(&:strip)
   end
 
@@ -56,7 +62,7 @@ class Parsers::Aura
   end
 
   def feet_parser(text)
-    match = text.match(/(\d+) (feet|ft\.)/i)
+    match = text.match(AURA_REGEXES[:feet])
     if match
       { feet: match[1].to_i }
     else
@@ -65,7 +71,7 @@ class Parsers::Aura
   end
 
   def dc_parser(text)
-    match = text.match(/DC (\d+)/i)
+    match = text.match(AURA_REGEXES[:dc])
     if match
       { dc: match[1].to_i }
     else
@@ -74,7 +80,7 @@ class Parsers::Aura
   end
 
   def rounds_parser(text)
-    match = text.match(/(\d.+) rounds/i)
+    match = text.match(AURA_REGEXES[:rounds])
     if match
       { rounds: match[1] }
     else
