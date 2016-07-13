@@ -1,6 +1,13 @@
 class Parsers::Xp
   def self.perform(creature)
-    xp_string = creature.at('.stat-block-xp').text
-    xp_string.gsub(/(XP |,)/, '').to_i
+    bold_elements = creature.css('b')
+    bold_elements.each do |bold|
+      if bold.text.match('XP ')
+        xp_string = bold.text.gsub(/(XP |,)/, '')
+        return xp_string.to_i
+      end
+    end
+
+    raise 'could not parse XP'
   end
 end
