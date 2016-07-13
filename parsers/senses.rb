@@ -52,7 +52,7 @@ class Parsers::Senses
   end
 
   def individual_senses(text)
-    text.split(';')
+    text.split(/,|;/)
   end
 
   def sense_attributes(sense)
