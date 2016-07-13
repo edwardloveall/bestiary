@@ -1,4 +1,4 @@
-class Parsers::Aura
+class Bestiary::Parsers::Aura
   AURA_REGEXES = {
     feet: /(\d+) (feet|ft\.)/i,
     dc: /DC (\d+)/i,

@@ -1,4 +1,4 @@
-class Parsers::Alignment
+class Bestiary::Parsers::Alignment
   ALIGNMENTS = %w(LG LN LE NG N NE CG CN CE).freeze
   attr_reader :stat_block
 

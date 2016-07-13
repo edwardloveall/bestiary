@@ -1,4 +1,4 @@
-class Parsers::Xp
+class Bestiary::Parsers::Xp
   def self.perform(creature)
     bold_elements = creature.css('b')
     bold_elements.each do |bold|

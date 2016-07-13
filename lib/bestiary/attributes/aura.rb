@@ -1,4 +1,4 @@
-class Attributes::Aura
+class Bestiary::Attributes::Aura
   attr_reader :title, :dc, :feet, :rounds
 
   def initialize(title:, dc: nil, feet: nil, rounds: nil)

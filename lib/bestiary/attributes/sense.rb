@@ -1,4 +1,4 @@
-class Attributes::Sense
+class Bestiary::Attributes::Sense
   attr_reader :title, :value, :unit
 
   def initialize(title:, value: nil, unit: nil)

@@ -1,6 +1,6 @@
-module Attributes
+module Bestiary::Attributes
 end
 
-require 'attributes/basic'
-require 'attributes/sense'
-require 'attributes/aura'
+require 'bestiary/attributes/basic'
+require 'bestiary/attributes/sense'
+require 'bestiary/attributes/aura'

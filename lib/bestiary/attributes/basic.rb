@@ -1,4 +1,4 @@
-class Attributes::Basic
+class Bestiary::Attributes::Basic
   attr_reader :name, :cr, :xp,
               :alignment, :size, :type,
               :initiative, :senses,

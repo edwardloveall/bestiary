@@ -1,4 +1,4 @@
-class Parsers::Type
+class Bestiary::Parsers::Type
   TYPES = [
     'aberration',
     'animal',

@@ -1,4 +1,4 @@
-class Parsers::Senses
+class Bestiary::Parsers::Senses
   ATTRIBUTE_REGEXS = [
     /(Perception) ([\+\-]\d+)/i,
     /(blindsense) (\d+) (ft\.)/i,

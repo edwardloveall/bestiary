@@ -1,4 +1,4 @@
-class Parsers::Creature
+class Bestiary::Parsers::Creature
   def self.perform(page)
     new.perform(page)
   end

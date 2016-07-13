@@ -1,4 +1,4 @@
-class Parsers::Size
+class Bestiary::Parsers::Size
   SIZES = %w(Fine
              Diminutive
              Tiny

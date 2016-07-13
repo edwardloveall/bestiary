@@ -1,13 +1,13 @@
-module Parsers
+module Bestiary::Parsers
 end
 
-require 'parsers/creature'
-require 'parsers/name'
-require 'parsers/cr'
-require 'parsers/xp'
-require 'parsers/alignment'
-require 'parsers/size'
-require 'parsers/type'
-require 'parsers/initiative'
-require 'parsers/senses'
-require 'parsers/aura'
+require 'bestiary/parsers/creature'
+require 'bestiary/parsers/name'
+require 'bestiary/parsers/cr'
+require 'bestiary/parsers/xp'
+require 'bestiary/parsers/alignment'
+require 'bestiary/parsers/size'
+require 'bestiary/parsers/type'
+require 'bestiary/parsers/initiative'
+require 'bestiary/parsers/senses'
+require 'bestiary/parsers/aura'

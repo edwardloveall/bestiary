@@ -1,4 +1,4 @@
-class Parsers::Initiative
+class Bestiary::Parsers::Initiative
   def self.perform(creature)
     bold_elements = creature.css('b')
     bold_elements.each do |element|
