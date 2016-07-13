@@ -17,7 +17,10 @@ class Parsers::Creature
         break if h1?(element)
         fragment.add_child(element.dup)
       end
-      creatures << fragment
+
+      if enough_attributes?(fragment)
+        creatures << fragment
+      end
     end
 
     creatures
@@ -25,5 +28,9 @@ class Parsers::Creature
 
   def h1?(element)
     element.name == 'h1'
+  end
+
+  def enough_attributes?(fragment)
+    fragment.css('p.stat-block-1').length > 10
   end
 end
