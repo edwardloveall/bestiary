@@ -1,6 +1,6 @@
 class Parsers::Senses
   ATTRIBUTE_REGEXS = [
-    /(Perception) ((\+|-)\d+)/i,
+    /(Perception) ([\+\-]\d+)/i,
     /(blindsense) (\d+) (ft\.)/i,
     /(blindsight) (\d+) (ft\.)/i,
     /(darkvision) (\d+) (ft\.)/i,
