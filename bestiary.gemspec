@@ -10,7 +10,11 @@ Gem::Specification.new do |spec|
   spec.email = ['edward@edwardloveall.com']
 
   spec.summary = 'Turn the pathfinder bestiary into a database'
-  spec.description = 'Convert the html files at http://paizo.com/pathfinderRPG/prd/indices/bestiary.html into data sutable to insert into a SQL database'
+  spec.description = <<-DESC
+Convert the html files at
+http://paizo.com/pathfinderRPG/prd/indices/bestiary.html into data sutable to
+insert into a SQL database
+DESC
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.3'
 
