@@ -8,6 +8,15 @@ class Bestiary::Attributes::Aura
     @rounds = rounds
   end
 
+  def ==(other)
+    (
+      title == other.title &&
+      dc == other.dc &&
+      feet == other.feet &&
+      rounds == other.rounds
+    )
+  end
+
   def to_s
     feet_string = feet ? "#{feet} ft" : nil
     dc_string = dc ? "DC #{dc}" : nil
