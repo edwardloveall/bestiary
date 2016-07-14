@@ -763,7 +763,7 @@ Style/NegatedIf:
   Enabled: false
 
 Style/NegatedWhile:
-  Enabled: true
+  Enabled: false
 
 Style/NestedModifier:
   Enabled: true
