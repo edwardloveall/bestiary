@@ -8,12 +8,20 @@ class Bestiary::Attributes::Sense
   end
 
   def to_s
-    if !value.nil? && !unit.nil?
+    if value_and_unit?
       "#{title}: #{value} #{unit}"
-    elsif !value.nil?
+    elsif value?
       "#{title}: #{value}"
     else
       title
     end
+  end
+
+  def value_and_unit?
+    value? && !unit.nil?
+  end
+
+  def value?
+    !value.nil?
   end
 end
