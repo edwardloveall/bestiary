@@ -1,11 +1,12 @@
 class Bestiary::Attributes::Aura
-  attr_reader :title, :dc, :feet, :rounds
+  attr_reader :title, :dc, :feet, :rounds, :minutes
 
-  def initialize(title:, dc: nil, feet: nil, rounds: nil)
+  def initialize(title:, dc: nil, feet: nil, rounds: nil, minutes: nil)
     @title = title
     @dc = dc
     @feet = feet
     @rounds = rounds
+    @minutes = minutes
   end
 
   def ==(other)
@@ -13,7 +14,8 @@ class Bestiary::Attributes::Aura
       title == other.title &&
       dc == other.dc &&
       feet == other.feet &&
-      rounds == other.rounds
+      rounds == other.rounds &&
+      minutes == other.minutes
     )
   end
 
