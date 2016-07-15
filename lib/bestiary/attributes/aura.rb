@@ -20,10 +20,15 @@ class Bestiary::Attributes::Aura
   end
 
   def to_s
-    feet_string = feet ? "#{feet} ft" : nil
-    dc_string = dc ? "DC #{dc}" : nil
-    rounds_string = rounds ? "#{feet} rounds" : nil
-    attrs = [feet_string, dc_string, rounds_string].compact.join(', ')
-    "#{title} (#{attrs})"
+    string = title
+    attrs = []
+    attrs << "DC #{dc}" if dc
+    attrs << "#{feet} feet" if feet
+    attrs << "#{rounds} rounds" if rounds
+    attrs << "#{minutes} minutes" if minutes
+    if !attrs.empty?
+      string += " (#{attrs.join(', ')})"
+    end
+    string
   end
 end
