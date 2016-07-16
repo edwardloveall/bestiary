@@ -1,11 +1,16 @@
 class Bestiary::Parsers::Creature
-  def self.perform(page)
-    new.perform(page)
+  MIN_ATTR_COUNT = 15
+  attr_reader :dom
+
+  def self.perform(dom)
+    new(dom).perform
   end
 
-  def perform(dom)
-    content = dom.at('div.body')
-    headers = content.css('h1')
+  def initialize(dom)
+    @dom = dom
+  end
+
+  def perform
     creatures = []
 
     headers.each do |header|
@@ -14,7 +19,7 @@ class Bestiary::Parsers::Creature
       loop do
         element = element.next
         break if element.nil?
-        break if h1?(element)
+        break if heading?(element)
         fragment.add_child(element.dup)
       end
 
@@ -26,11 +31,22 @@ class Bestiary::Parsers::Creature
     creatures
   end
 
-  def h1?(element)
-    element.name == 'h1'
+  def headers
+    content = dom.at('div.body')
+    content.css('h1, h2')
+  end
+
+  def heading?(element)
+    element.name == 'h1' || element.name == 'h2'
   end
 
   def enough_attributes?(fragment)
-    fragment.css('p.stat-block-1').length > 10
+    attr_text = fragment.css('b, strong').map(&:text)
+    valid_attrs = %w(Init Senses AC hp Fort Ref Will Speed Melee Space Reach Str
+                     Dex Con Int Wis Cha Base Atk CMB CMD Feats Skills Languages
+                     Environment Organization Treasure Defensive\ Abilities
+                     Immune Special\ Attacks)
+    included_attrs = valid_attrs.select { |a| attr_text.include?(a) }
+    included_attrs.count >= MIN_ATTR_COUNT
   end
 end
