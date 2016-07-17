@@ -9,6 +9,15 @@ module Bestiary
 
         expect(result).to eq('NG')
       end
+
+      it 'returns not found if it cant find the alignment' do
+        html = alignment_html('Foo Small Vermin')
+        dom = parse_html(html)
+
+        result = Parsers::Alignment.perform(dom)
+
+        expect(result).to eq('not found')
+      end
     end
 
     def alignment_html(text)

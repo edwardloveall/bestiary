@@ -15,5 +15,6 @@ class Bestiary::Parsers::Alignment
         end
       end
     end
+    'not found'
   end
 end
