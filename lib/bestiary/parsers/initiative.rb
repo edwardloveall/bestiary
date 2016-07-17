@@ -8,5 +8,6 @@ class Bestiary::Parsers::Initiative
         return modifier.gsub(/[^\d|\-]/, '').to_i
       end
     end
+    'not found'
   end
 end

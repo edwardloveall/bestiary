@@ -18,6 +18,15 @@ module Bestiary
 
         expect(result).to eq(-3)
       end
+
+      it 'returns not found when it cant be parsed' do
+        html = %(<p class="stat-block-1"><b>Nope</b> +1;</p>)
+        dom = parse_html(html)
+
+        result = Parsers::Initiative.perform(dom)
+
+        expect(result).to eq('not found')
+      end
     end
 
     def initiative_html(number)
