@@ -11,6 +11,16 @@ module Bestiary
       end
     end
 
+    it 'returns "not found" if it cant parse the CR' do
+      html = %(<p class="stat-block-title">Giant Flea
+               <span class="stat-block-cr">foo</span></p>)
+      dom = parse_html(html)
+
+      result = Parsers::Cr.perform(dom)
+
+      expect(result).to eq('not found')
+    end
+
     def cr_html(text)
       %(<p class="stat-block-title">Giant Flea <span class="stat-block-cr">
       CR #{text}</span></p>)

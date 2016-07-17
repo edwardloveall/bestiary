@@ -6,7 +6,6 @@ class Bestiary::Parsers::Cr
         return stat.text.gsub(/[^\d\/]/, '')
       end
     end
-
-    raise 'could not parse CR'
+    'not found'
   end
 end
