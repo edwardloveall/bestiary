@@ -25,6 +25,21 @@ module Bestiary
           end
         end
       end
+
+      context 'with no heading' do
+        context 'in standard first last name order' do
+          it 'returns the creature name' do
+            name = 'Violet Fungus'
+            html = %(<p class="stat-block-title"><b>#{name} <span
+                     class="stat-block-cr">CR 3</span></b></p>)
+            dom = parse_html(html)
+
+            result = Parsers::Name.perform(dom)
+
+            expect(result).to eq(name)
+          end
+        end
+      end
     end
   end
 end

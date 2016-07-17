@@ -10,7 +10,12 @@ class Bestiary::Parsers::Name
   end
 
   def perform
-    name = name_from_headings
+    name = ''
+    if headings?
+      name = name_from_headings
+    else
+      name = name_from_stats
+    end
 
     if last_name_first?(name)
       switch_names(name)
@@ -19,9 +24,27 @@ class Bestiary::Parsers::Name
     end
   end
 
+  def headings?
+    !creature.css('h1, h2').empty?
+  end
+
   def name_from_headings
     heading = creature.css('h1, h2').first
     heading.text.strip
+  end
+
+  def name_from_stats
+    stats = creature.css('p')
+    stats.each do |stat|
+      if stat.text.include?('CR')
+        return name_from_stat(stat)
+      end
+    end
+  end
+
+  def name_from_stat(stat)
+    title_parts = stat.parent.text.split(' CR')
+    title_parts.first.strip
   end
 
   def last_name_first?(name)
