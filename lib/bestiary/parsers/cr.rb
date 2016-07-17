@@ -1,10 +1,9 @@
 class Bestiary::Parsers::Cr
   def self.perform(creature)
-    bold_elements = creature.css('b')
-    bold_elements.each do |bold|
-      if bold.text.match('CR ')
-        cr_string = bold.text.gsub(/[^\d]/, '')
-        return cr_string.to_i
+    stat_elements = creature.css('p')
+    stat_elements.each do |stat|
+      if stat.text.match('CR ')
+        return stat.text.gsub(/[^\d\/]/, '')
       end
     end
 
