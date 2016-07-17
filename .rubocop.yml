@@ -878,7 +878,7 @@ Style/RedundantSelf:
   Enabled: true
 
 Style/RegexpLiteral:
-  Enabled: true
+  Enabled: false
   EnforcedStyle: slashes
   AllowInnerSlashes: false
 
