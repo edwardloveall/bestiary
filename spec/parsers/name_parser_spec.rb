@@ -13,6 +13,17 @@ module Bestiary
             expect(result).to eq(name)
           end
         end
+
+        context 'in last-name-first order' do
+          it 'returns the creature name' do
+            html = %(<h1 id="demon-balor">Demon, Balor</h1>)
+            dom = parse_html(html)
+
+            result = Parsers::Name.perform(dom)
+
+            expect(result).to eq('Balor Demon')
+          end
+        end
       end
     end
   end
