@@ -37,7 +37,7 @@ class Bestiary::Parsers::Senses
   end
 
   def parent_element
-    bold_elements = creature.css('b')
+    bold_elements = creature.css('b, strong')
     bold_elements.each do |element|
       text = element.text.strip
       if text == 'Senses'
