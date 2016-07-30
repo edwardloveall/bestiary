@@ -27,5 +27,5 @@ DESC
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'pry', '~> 0.10'
-  spec.add_development_dependency 'rspec', '~> 3.4'
+  spec.add_development_dependency 'rspec', '~> 3.5'
 end
