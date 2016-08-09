@@ -15,11 +15,22 @@ class Bestiary::Parsers::Type
     'vermin'
   ].freeze
 
+  attr_reader :creature
+
   def self.perform(creature)
-    new.perform(creature)
+    new(creature).perform
   end
 
-  def perform(creature)
+  def initialize(creature)
+    @creature = creature
+  end
+
+  def perform
+    title = primary_type
+    Bestiary::Attributes::Type.new(title: title)
+  end
+
+  def primary_type
     type_regexp = Regexp.union(TYPES)
     stats = creature.css('p.stat-block-1')
     stats.each do |stat|
