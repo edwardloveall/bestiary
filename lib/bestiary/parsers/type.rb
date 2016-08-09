@@ -105,9 +105,7 @@ class Bestiary::Parsers::Type
   end
 
   def perform
-    title = primary_type
-    subtypes
-    Bestiary::Attributes::Type.new(title: title, subtypes: subtypes)
+    Bestiary::Attributes::Type.new(title: primary_type, subtypes: subtypes)
   end
 
   def parent_element
