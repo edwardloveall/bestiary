@@ -3,7 +3,7 @@ module Bestiary
     describe '.perform' do
       it 'returns the creature type' do
         html = <<-HTML
-        <p class="stat-block-1">CE Large <a href="creatureTypes.html#humanoid" >humanoid</a> (giant)</p>
+        <p class="stat-block-1">CE Large <a href="creatureTypes.html#humanoid" >humanoid</a></p>
         HTML
         dom = parse_html(html)
         humanoid = Attributes::Type.new(title: 'humanoid')

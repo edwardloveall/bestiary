@@ -133,7 +133,8 @@ class Bestiary::Parsers::Type
     types = []
     text = parent_element.text
     SUBTYPES.each do |subtype|
-      if text.include?(subtype)
+      regexp = %r{\b#{subtype}\b}
+      if text.match(regexp)
         types << subtype
       end
     end
