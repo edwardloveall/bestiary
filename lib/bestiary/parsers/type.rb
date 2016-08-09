@@ -40,13 +40,12 @@ class Bestiary::Parsers::Type
     end
   end
 
+  def primary_type
+    text = parent_element.text
     type_regexp = Regexp.union(TYPES)
-    stats = creature.css('p.stat-block-1')
-    stats.each do |stat|
-      match = stat.text.match(type_regexp)
-      if match
-        return stat
-      end
+    match = text.match(type_regexp)
+    if match
+      return match[0]
     end
   end
 
