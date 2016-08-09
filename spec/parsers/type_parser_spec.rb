@@ -13,6 +13,21 @@ module Bestiary
         expect(result).to eq(humanoid)
       end
 
+      it 'returns the creature subtypes' do
+        html = <<-HTML
+        <p class="stat-block-1">LE Large outsider (devil, evil, extraplanar, lawful)</p>
+        HTML
+        subtypes = %w(devil evil extraplanar lawful)
+        dom = parse_html(html)
+        outsider = Attributes::Type.new(title: 'outsider',
+                                        subtypes: subtypes)
+
+        result = Parsers::Type.perform(dom)
+
+        expect(result).to eq(outsider)
+      end
+    end
+
     describe '#parent_element' do
       it 'returns the parent element of the type' do
         html = <<-HTML

@@ -15,6 +15,85 @@ class Bestiary::Parsers::Type
     'vermin'
   ].freeze
 
+  SUBTYPES = [
+    'adlet',
+    'aeon',
+    'aether',
+    'agathion',
+    'air',
+    'android',
+    'angel',
+    'aquatic',
+    'archon',
+    'asura',
+    'augmented',
+    'azata',
+    'behemoth',
+    'catfolk',
+    'changeling',
+    'chaotic',
+    'clockwork',
+    'cold',
+    'colossus',
+    'daemon',
+    'dark folk',
+    'deep one',
+    'demodand',
+    'demon',
+    'devil',
+    'div',
+    'dwarf',
+    'earth',
+    'elemental',
+    'elf',
+    'evil',
+    'extraplanar',
+    'fire',
+    'giant',
+    'gnome',
+    'goblinoid',
+    'good',
+    'gray',
+    'great old one',
+    'grippli',
+    'halfling',
+    'human',
+    'incorporeal',
+    'inevitable',
+    'kaiju',
+    'kami',
+    'kasatha',
+    'kitsune',
+    'kyton',
+    'lawful',
+    'leshy',
+    'manasaputra',
+    'mythic',
+    'native',
+    'nightshade',
+    'oni',
+    'orc',
+    'phantom',
+    'protean',
+    'psychopomp',
+    'qlippoth',
+    'rakshasa',
+    'ratfolk',
+    'reptilian',
+    'robot',
+    'sahkil',
+    'samsaran',
+    'sasquatch',
+    'shapechanger',
+    'skinwalker',
+    'swarm',
+    'udaeus',
+    'vanara',
+    'vishkanya',
+    'water',
+    'wayang'
+  ].freeze
+
   attr_reader :creature
 
   def self.perform(creature)
@@ -27,7 +106,8 @@ class Bestiary::Parsers::Type
 
   def perform
     title = primary_type
-    Bestiary::Attributes::Type.new(title: title)
+    subtypes
+    Bestiary::Attributes::Type.new(title: title, subtypes: subtypes)
   end
 
   def parent_element
@@ -49,14 +129,15 @@ class Bestiary::Parsers::Type
     end
   end
 
-  def primary_type
-    type_regexp = Regexp.union(TYPES)
-    stats = creature.css('p.stat-block-1')
-    stats.each do |stat|
-      match = stat.text.match(type_regexp)
-      if match
-        return match[0]
+  def subtypes
+    types = []
+    text = parent_element.text
+    SUBTYPES.each do |subtype|
+      if text.include?(subtype)
+        types << subtype
       end
     end
+
+    types
   end
 end
