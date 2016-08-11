@@ -10,14 +10,7 @@ class Bestiary::Parsers::Armor
   end
 
   def perform
-    text = parent_element.text
-    sanitized = text.downcase
-                    .sub(' (', ', ')
-                    .sub('; ', ', ')
-                    .sub(')', '')
-                    .sub('–', '-')
-    pairs = sanitized.split(', ')
-    pairs.map do |pair|
+    armor_pairs.map do |pair|
       bonus = pair.scan(/[+\-]?\d+/).first
       title = pair.sub(bonus, '').strip
       Bestiary::Attributes::Armor.new(title: title, bonus: bonus.to_i)
@@ -31,5 +24,15 @@ class Bestiary::Parsers::Armor
         stat.text.strip.match(/^AC /)
       end
     end
+  end
+
+  def armor_pairs
+    text = parent_element.text
+    sanitized = text.downcase
+                    .sub(' (', ', ')
+                    .sub('; ', ', ')
+                    .sub(')', '')
+                    .sub('–', '-')
+    sanitized.split(', ')
   end
 end

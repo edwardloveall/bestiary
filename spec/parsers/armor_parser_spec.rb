@@ -34,5 +34,24 @@ module Bestiary
         expect(parent).to eq(stat)
       end
     end
+
+    describe '#armor_pairs' do
+      it 'splits the text of the armor into pairs by title and value' do
+        html = <<-HTML
+				<p class="stat-block-1"><b>AC</b> 19, touch 10, flat-footed 19 (+9 natural; +2 deflection vs. evil)</p>
+        HTML
+        dom = parse_html(html)
+        parser = Parsers::Armor.new(dom)
+        pairs = ['ac 19',
+                 'touch 10',
+                 'flat-footed 19',
+                 '+9 natural',
+                 '+2 deflection vs. evil']
+
+        result = parser.armor_pairs
+
+        expect(result).to eq(pairs)
+      end
+    end
   end
 end
