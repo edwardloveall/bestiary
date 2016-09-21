@@ -29,8 +29,8 @@ module Bestiary
 
     describe '#perform' do
       it 'returns an array of generic attributes' do
-        bloodthirst = Attributes::Generic.new(title: 'bloodthirst')
-        channel = Attributes::Generic.new(title: 'channel resistance', bonus: 2)
+        bloodthirst = Attributes::DefensiveAbility.new(title: 'bloodthirst')
+        channel = Attributes::DefensiveAbility.new(title: 'channel resistance', bonus: 2)
 
         result = Parsers::DefensiveAbilities.perform(common_document)
 
@@ -43,7 +43,7 @@ module Bestiary
           <p class="stat-block-1"><b>Defensive Abilities</b> hardness 5 (or more); <b>Immune</b> <a href="universalMonsterRules.html#construct-traits">construct traits</a></p>
           HTML
           dom = parse_html(html)
-          hardness = Attributes::Generic.new(title: 'hardness', bonus: 5)
+          hardness = Attributes::DefensiveAbility.new(title: 'hardness', bonus: 5)
 
           result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -57,7 +57,7 @@ module Bestiary
           <p class="stat-block-1"><b>Defensive Abilities</b> swarm traits, <b>Immune</b> weapon damage</p>
           HTML
           dom = parse_html(html)
-          swarm = Attributes::Generic.new(title: 'swarm traits')
+          swarm = Attributes::DefensiveAbility.new(title: 'swarm traits')
 
           result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -71,7 +71,7 @@ module Bestiary
           <p class="stat-block-1"><b>Defensive Abilities</b> <i>spell turning</i> <b>DR</b> 20/epic and <a href="/pathfinderRPG/prd/bestiary/creatureTypes.html#lawful-subtype">lawful</a>; <b>Immune</b> aging, death effects, <a href="/pathfinderRPG/prd/bestiary/universalMonsterRules.html#disease-(ex-or-su)">disease</a>, mind-affecting effects; <b>SR</b> 35</p>
           HTML
           dom = parse_html(html)
-          turning = Attributes::Generic.new(title: 'spell turning')
+          turning = Attributes::DefensiveAbility.new(title: 'spell turning')
 
           result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -86,7 +86,7 @@ module Bestiary
             <p class="stat-block-1"><b>Defensive Abilities</b> natural cunning*; <b>DR</b> 5/magic; <b>Immune</b> poison; <b>Resist</b> acid 10, cold 10, electricity 10, fire 10; <b>SR</b> 17</p>
             HTML
             dom = parse_html(html)
-            cunning = Attributes::Generic.new(title: 'natural cunning')
+            cunning = Attributes::DefensiveAbility.new(title: 'natural cunning')
 
             result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -100,7 +100,7 @@ module Bestiary
             <p class="stat-block-1"><b>Defensive Abilities</b> ink cloud (30-foot-radius sphere)</p>
             HTML
             dom = parse_html(html)
-            swarm = Attributes::Generic.new(title: 'ink cloud')
+            swarm = Attributes::DefensiveAbility.new(title: 'ink cloud')
 
             result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -114,7 +114,7 @@ module Bestiary
             <p class="stat-block-1"><b>Defensive Abilities</b> self-resurrection; <b>DR</b> 15/evil; <b>Immune</b> fire <b>SR</b> 26</p>
             HTML
             dom = parse_html(html)
-            resurrection = Attributes::Generic.new(title: 'self-resurrection')
+            resurrection = Attributes::DefensiveAbility.new(title: 'self-resurrection')
 
             result = Parsers::DefensiveAbilities.perform(dom)
 
@@ -128,8 +128,8 @@ module Bestiary
             <p class="stat-block-1"><b>Defensive Abilities</b> reactive strike, <a href="/pathfinderRPG/prd/bestiary/universalMonsterRules.html#split">split</a> (sonic or slashing, 32 hp); <b>DR</b> 10/–; Immune acid, <a href="/pathfinderRPG/prd/bestiary/creatureTypes.html#ooze">ooze</a> traits; <b>Resist</b> electricity 30, <a href="/pathfinderRPG/prd/bestiary/creatureTypes.html#fire-subtype">fire</a> 30</p>
             HTML
             dom = parse_html(html)
-            strike = Attributes::Generic.new(title: 'reactive strike')
-            split = Attributes::Generic.new(title: 'split')
+            strike = Attributes::DefensiveAbility.new(title: 'reactive strike')
+            split = Attributes::DefensiveAbility.new(title: 'split')
 
             result = Parsers::DefensiveAbilities.perform(dom)
 

@@ -30,7 +30,7 @@ class Bestiary::Parsers::DefensiveAbilities
     individual = individual_abilities(abilities_text)
     individual.map do |ability_text|
       hash = ability_hash(ability_text)
-      Bestiary::Attributes::Generic.new(hash)
+      Bestiary::Attributes::DefensiveAbility.new(hash)
     end
   end
 

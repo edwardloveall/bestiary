@@ -1,4 +1,4 @@
-class Bestiary::Attributes::Generic
+class Bestiary::Attributes::TitleWithBonus
   attr_reader :title, :bonus
 
   def initialize(title:, bonus: nil)
