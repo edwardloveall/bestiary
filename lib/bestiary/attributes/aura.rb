@@ -10,13 +10,11 @@ class Bestiary::Attributes::Aura
   end
 
   def ==(other)
-    (
-      title == other.title &&
-      dc == other.dc &&
-      feet == other.feet &&
-      rounds == other.rounds &&
-      minutes == other.minutes
-    )
+    title == other.title &&
+    dc == other.dc &&
+    feet == other.feet &&
+    rounds == other.rounds &&
+    minutes == other.minutes
   end
 
   def to_s

@@ -7,6 +7,6 @@ class Bestiary::Attributes::Type
   end
 
   def ==(other)
-    (title == other.title && subtypes == other.subtypes)
+    title == other.title && subtypes == other.subtypes
   end
 end

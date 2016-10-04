@@ -7,7 +7,7 @@ class Bestiary::Attributes::Hp
   end
 
   def ==(other)
-    return value == other.value &&
-           dice == other.dice
+    value == other.value &&
+    dice == other.dice
   end
 end
