@@ -47,6 +47,22 @@ module Bestiary
             expect(creature).to be_a(Nokogiri::HTML::DocumentFragment)
           end
         end
+
+        context 'when headers are not formted correctly' do
+          it 'returns DocumentFragments in an array' do
+            html = fixture_load('qlippoth.html')
+            dom = parse_html(html)
+
+            result = Parsers::Creature.perform(dom)
+
+            expect(result).to be_a(Array)
+            expect(result.count).to eq(7)
+
+            result.each do |creature|
+              expect(creature).to be_a(Nokogiri::HTML::DocumentFragment)
+            end
+          end
+        end
       end
     end
   end
