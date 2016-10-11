@@ -41,7 +41,7 @@ module Bestiary
           result = Parsers::Creature.perform(dom)
 
           expect(result).to be_a(Array)
-          expect(result.count).to eq(7)
+          expect(result.count).to eq(9)
 
           result.each do |creature|
             expect(creature).to be_a(Nokogiri::HTML::DocumentFragment)

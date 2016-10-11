@@ -33,7 +33,9 @@ class Bestiary::Parsers::Creature
 
   def headers
     content = dom.at('div.body')
-    content.css('h1, h2')
+    content.css('p').select do |stat|
+      stat.text.strip.match(/CR \d+\z/)
+    end
   end
 
   def heading?(element)
