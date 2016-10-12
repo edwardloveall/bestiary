@@ -9,6 +9,12 @@ class Bestiary::Parsers::Speed
     @creature = creature
   end
 
+  def title(speed)
+    matches = speed.strip.match(/([[:alpha:]]+) \d+/)
+    return 'movement' if matches.nil?
+    matches[1].sub('Speed', 'movement').strip
+  end
+
   def divide(text)
     @speeds ||= begin
       speeds = []

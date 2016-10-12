@@ -1,5 +1,61 @@
 module Bestiary
   RSpec.describe Parsers::Speed do
+    describe '#title' do
+      it 'returns the text before the number' do
+        text = ' burrow 30 ft. '
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('burrow')
+      end
+
+      it 'returns "movement" if "Speed" is the text' do
+        text = 'Speed 30 ft.'
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('movement')
+      end
+
+      it 'returns "movement" if no title is present' do
+        text = '); 35 ft., '
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('movement')
+      end
+
+      it 'returns title with "Speed" removed' do
+        text = 'Speed fly 60 ft. (perfect)'
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('fly')
+      end
+
+      it 'removes weird punctuation' do
+        text = ', fly 30 ft. (clumsy'
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('fly')
+      end
+
+      it 'works when there is no space before feet' do
+        text = ' (35 ft. in armor'
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.title(text)
+
+        expect(result).to eq('movement')
+      end
+    end
+
     describe '#divide' do
       it 'splits all speeds up into individual pieces of text' do
         text = 'Speed 30 ft., fly 30 ft. (clumsy) '
