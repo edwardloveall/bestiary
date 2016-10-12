@@ -15,6 +15,11 @@ class Bestiary::Parsers::Speed
     matches[1].sub('Speed', 'movement').strip
   end
 
+  def feet(speed)
+    match = speed.strip.match(/\d+/)[0]
+    match.to_i
+  end
+
   def divide(text)
     @speeds ||= begin
       speeds = []

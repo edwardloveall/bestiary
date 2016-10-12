@@ -56,6 +56,17 @@ module Bestiary
       end
     end
 
+    describe '#feet' do
+      it 'returns the feet' do
+        text = 'Speed 30 ft.'
+        parser = Parsers::Speed.new(nil)
+
+        result = parser.feet(text)
+
+        expect(result).to eq(30)
+      end
+    end
+
     describe '#divide' do
       it 'splits all speeds up into individual pieces of text' do
         text = 'Speed 30 ft., fly 30 ft. (clumsy) '
