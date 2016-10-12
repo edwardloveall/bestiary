@@ -5,8 +5,38 @@ class Bestiary::Parsers::Speed
 
   attr_reader :creature
 
+  def self.perform(creature)
+    new(creature).perform
+  end
+
   def initialize(creature)
     @creature = creature
+  end
+
+  def perform
+    return if parent_element.nil?
+    text = parent_element.text
+    speeds = divide(text)
+    armors = armor_indexes(speeds)
+
+    speeds.map.with_index do |speed, index|
+      Bestiary::Attributes::Speed.new(
+        title: title(speed),
+        feet: feet(speed),
+        maneuverability: maneuverability(speed),
+        armored: armors[index]
+      )
+    end
+  end
+
+  def parent_element
+    @parent ||= begin
+      creature.css('p').find do |stat|
+        text = stat.text
+        break if text.strip.match(/SPECIAL ABILITIES/)
+        text.match(/^Speed .{0,20}\d+/i)
+      end
+    end
   end
 
   def title(speed)

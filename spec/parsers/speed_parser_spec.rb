@@ -1,5 +1,42 @@
 module Bestiary
   RSpec.describe Parsers::Speed do
+    describe '.perform' do
+      it 'returns an array of speed attributes' do
+        html = '<p class="stat-block-1"><b>Speed</b> 30 ft., burrow 20 ft.</p>'
+        dom = parse_html(html)
+
+        results = Parsers::Speed.perform(dom)
+
+        expect(results).not_to be_empty
+        expect(results).to all(be_an(Attributes::Speed))
+      end
+
+      it 'returns speed attributes with proper data' do
+        html = '<p class="stat-block-1"><b>Speed</b> 30 ft., burrow 20 ft.</p>'
+        dom = parse_html(html)
+        movement = Attributes::Speed.new(title: 'movement', feet: 30)
+        burrow = Attributes::Speed.new(title: 'burrow', feet: 20)
+
+        results = Parsers::Speed.perform(dom)
+
+        expect(results).to eq([movement, burrow])
+      end
+
+      context 'with a fly speed' do
+        it 'returns an speed attributes with proper data' do
+          html = '<p class="stat-block-1"><b>Speed</b> fly 60 ft. (perfect)</p>'
+          dom = parse_html(html)
+          fly = Attributes::Speed.new(title: 'fly',
+                                      feet: 60,
+                                      maneuverability: :perfect)
+
+          results = Parsers::Speed.perform(dom)
+
+          expect(results).to eq([fly])
+        end
+      end
+    end
+
     describe '#title' do
       it 'returns the text before the number' do
         text = ' burrow 30 ft. '
