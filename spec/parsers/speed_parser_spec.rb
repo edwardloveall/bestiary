@@ -176,5 +176,48 @@ module Bestiary
         end
       end
     end
+
+    describe '#armor_indexes' do
+      context 'if no armor exists' do
+        it 'returns an array of false values for each speed' do
+          speeds = ['Speed 50 ft.', ' , fly 150 ft. (good)']
+          indexes = [false, false]
+          parser = Parsers::Speed.new(nil)
+
+          result = parser.armor_indexes(speeds)
+
+          expect(result).to eq(indexes)
+        end
+      end
+
+      context 'armor is at the end' do
+        it 'returns an array of false and true values' do
+          speeds = [
+            'Speed 50 ft.',
+            ' , fly 150 ft. (good',
+            ' ); 35 ft.',
+            ' , fly 100 ft. (good) in armor'
+          ]
+          indexes = [false, false, true, true]
+          parser = Parsers::Speed.new(nil)
+
+          result = parser.armor_indexes(speeds)
+
+          expect(result).to eq(indexes)
+        end
+      end
+
+      context 'there is a speed after armor is specified' do
+        it 'returns an array of false and true values' do
+          speeds = ['Speed 40 ft.', '  (30 ft. in armor', ' ), climb 15 ft.']
+          indexes = [false, true, false]
+          parser = Parsers::Speed.new(nil)
+
+          result = parser.armor_indexes(speeds)
+
+          expect(result).to eq(indexes)
+        end
+      end
+    end
   end
 end

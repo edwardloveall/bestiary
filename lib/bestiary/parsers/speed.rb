@@ -49,4 +49,26 @@ class Bestiary::Parsers::Speed
       speeds
     end
   end
+
+  def armor_indexes(speeds)
+    max_armor_index = speeds.find_index do |speed|
+      speed.match(CONDITION_SIGNATURE)
+    end
+
+    if max_armor_index.nil?
+      return speeds.map { false }
+    end
+
+    max_index_without_armor = (max_armor_index / 2).floor
+
+    speeds.map.with_index do |_, index|
+      if index <= max_index_without_armor
+        false
+      elsif index > max_index_without_armor && index <= max_armor_index
+        true
+      else
+        false
+      end
+    end
+  end
 end
