@@ -20,6 +20,13 @@ class Bestiary::Parsers::Speed
     match.to_i
   end
 
+  def maneuverability(speed)
+    matches = speed.match(MANEUVERABILITY)
+    if matches
+      matches[0].to_sym
+    end
+  end
+
   def divide(text)
     @speeds ||= begin
       speeds = []

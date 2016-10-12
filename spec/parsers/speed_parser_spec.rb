@@ -67,6 +67,30 @@ module Bestiary
       end
     end
 
+    describe '#maneuverability' do
+      context 'when maneuverability exists' do
+        it 'returns the maneuverability' do
+          text = ', fly 30 ft. (clumsy'
+          parser = Parsers::Speed.new(nil)
+
+          result = parser.maneuverability(text)
+
+          expect(result).to eq(:clumsy)
+        end
+      end
+
+      context 'when maneuverability does not exist' do
+        it 'returns nil' do
+          text = 'Speed 30 ft.'
+          parser = Parsers::Speed.new(nil)
+
+          result = parser.maneuverability(text)
+
+          expect(result).to be_nil
+        end
+      end
+    end
+
     describe '#divide' do
       it 'splits all speeds up into individual pieces of text' do
         text = 'Speed 30 ft., fly 30 ft. (clumsy) '
