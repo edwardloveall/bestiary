@@ -91,5 +91,52 @@ module Bestiary
         end
       end
     end
+
+    describe '#damage' do
+      it 'returns a die' do
+        text = '+1 light mace +9/+4 (1d6+1)'
+        parser = Parsers::Attack.new(text)
+        damage = Models::Die.new(count: 1, sides: 6, bonus: 1)
+
+        result = parser.damage
+
+        expect(result).to eq(damage)
+      end
+
+      context 'when critical range and critical multiplier are present' do
+        it 'returns a die' do
+          text = '+2 scythe +25/+20/+15 (2d4+15/19–20/×4 plus poison)'
+          parser = Parsers::Attack.new(text)
+          damage = Models::Die.new(count: 2, sides: 4, bonus: 15)
+
+          result = parser.damage
+
+          expect(result).to eq(damage)
+        end
+      end
+
+      context 'when no dice exist' do
+        it 'returns nil' do
+          text = 'tongue –1 touch (sticky tongue)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.damage
+
+          expect(result).to be_nil
+        end
+      end
+
+      context 'when the damage die has no bonus' do
+        it 'returns a die' do
+          text = 'shock +16 touch (2d8 electricity)'
+          parser = Parsers::Attack.new(text)
+          damage = Models::Die.new(count: 2, sides: 8, bonus: 0)
+
+          result = parser.damage
+
+          expect(result).to eq(damage)
+        end
+      end
+    end
   end
 end

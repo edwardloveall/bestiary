@@ -1,5 +1,6 @@
 class Bestiary::Parsers::Attack
   INITIAL_COUNT = /\d+\s/
+  DIE_SIGNATURE = /\d+d\d+([+\-]\d+)?/
   FORWARD_SLASH = /\//
 
   attr_reader :attack_text, :scanner
@@ -37,5 +38,17 @@ class Bestiary::Parsers::Attack
     end
 
     matches.map(&:to_i)
+  end
+
+  def damage
+    scanner.reset
+    scanner.scan_until(DIE_SIGNATURE)
+    die_text = scanner.matched
+    return if die_text.nil?
+
+    dice = Bestiary::Parsers::Dice.perform(die_text)
+    if !dice.empty?
+      dice.first
+    end
   end
 end
