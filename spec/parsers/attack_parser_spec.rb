@@ -138,5 +138,38 @@ module Bestiary
         end
       end
     end
+
+    describe '#critical_range' do
+      it 'returns the size of the range of crit numbers' do
+        text = 'mwk greatsword +18/+13 (3d6+12/19–20)'
+        parser = Parsers::Attack.new(text)
+
+        result = parser.critical_range
+
+        expect(result).to eq(2)
+      end
+
+      context 'if no range exists' do
+        it 'returns 1' do
+          text = '2 claws +9 (1d6+4 plus grab)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.critical_range
+
+          expect(result).to eq(1)
+        end
+
+        context 'but a critical multiplier does exist' do
+          it 'returns 1' do
+            text = 'longspear +12/+7 (1d8+7/x3)'
+            parser = Parsers::Attack.new(text)
+
+            result = parser.critical_range
+
+            expect(result).to eq(1)
+          end
+        end
+      end
+    end
   end
 end

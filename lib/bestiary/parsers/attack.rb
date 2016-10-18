@@ -51,4 +51,17 @@ class Bestiary::Parsers::Attack
       dice.first
     end
   end
+
+  def critical_range
+    number_range = /\d+-\d+/
+    scanner.reset
+    scanner.skip_until(DIE_SIGNATURE)
+    return 1 if scanner.scan(FORWARD_SLASH).nil?
+
+    text = scanner.scan(number_range)
+    return 1 if text.nil?
+
+    ends = text.split('-').map(&:to_i)
+    (ends.first..ends.last).size
+  end
 end
