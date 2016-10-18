@@ -13,4 +13,12 @@ class Bestiary::Parsers::Attack
     result = scanner.scan(INITIAL_COUNT) || 1
     result.to_i
   end
+
+  def title
+    bonus_sign = /\s[+\-]/
+    scanner.reset
+    scanner.skip(INITIAL_COUNT)
+    text = scanner.scan_until(bonus_sign)
+    text.sub(scanner.matched, '')
+  end
 end
