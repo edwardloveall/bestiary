@@ -64,4 +64,15 @@ class Bestiary::Parsers::Attack
     ends = text.split('-').map(&:to_i)
     (ends.first..ends.last).size
   end
+
+  def critical_multiplier
+    scanner.reset
+    scanner.skip_until(DIE_SIGNATURE)
+    return 2 if scanner.scan(FORWARD_SLASH).nil?
+
+    text = scanner.scan(/x\d+/)
+    return 2 if text.nil?
+
+    text.sub('x', '').to_i
+  end
 end

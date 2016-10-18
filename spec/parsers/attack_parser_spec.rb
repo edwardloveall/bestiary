@@ -171,5 +171,38 @@ module Bestiary
         end
       end
     end
+
+    describe '#critical_multiplier' do
+      it 'returns the number of times to roll damage' do
+        text = 'longspear +12/+7 (1d8+7/x3)'
+        parser = Parsers::Attack.new(text)
+
+        result = parser.critical_multiplier
+
+        expect(result).to eq(3)
+      end
+
+      context 'when no explicit multiplier exists' do
+        it 'returns the default of 2' do
+          text = 'slam +5 (1d6+3)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.critical_multiplier
+
+          expect(result).to eq(2)
+        end
+
+        context 'and a critical range is specified' do
+          it 'returns the default of 2' do
+            text = 'gore +16 (2d4+6/19-20)'
+            parser = Parsers::Attack.new(text)
+
+            result = parser.critical_multiplier
+
+            expect(result).to eq(2)
+          end
+        end
+      end
+    end
   end
 end
