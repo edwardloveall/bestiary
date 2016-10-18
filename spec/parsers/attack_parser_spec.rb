@@ -56,5 +56,40 @@ module Bestiary
         end
       end
     end
+
+    describe '#bonuses' do
+      context 'if there are many bonuses' do
+        it 'returns an array of bonuses' do
+          text = '+2 wounding spear +32/+27/+22/+17 (3d6+17/x3 plus 1 bleed)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.bonuses
+
+          expect(result).to eq([32, 27, 22, 17])
+        end
+      end
+
+      context 'if there is only one bonus' do
+        it 'returns the single bonus in an array' do
+          text = 'incorporeal touch +6 (1d6 negative energy plus 1d6 Con drain)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.bonuses
+
+          expect(result).to eq([6])
+        end
+      end
+
+      context 'when the bonus is negative' do
+        it 'returns the single bonus in an array' do
+          text = 'short sword –1 (1d3–3/19–20)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.bonuses
+
+          expect(result).to eq([-1])
+        end
+      end
+    end
   end
 end
