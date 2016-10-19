@@ -5,9 +5,25 @@ class Bestiary::Parsers::Attack
 
   attr_reader :attack_text, :scanner
 
+  def self.perform(attack_text)
+    new(attack_text).perform
+  end
+
   def initialize(attack_text)
     @attack_text = attack_text.tr('–', '-')
     @scanner = StringScanner.new(@attack_text)
+  end
+
+  def perform
+    Bestiary::Attributes::Attack.new(
+      count: count,
+      title: title,
+      bonuses: bonuses,
+      damage: damage,
+      critical_range: critical_range,
+      critical_multiplier: critical_multiplier,
+      additional_effects: additional_effects
+    )
   end
 
   def count

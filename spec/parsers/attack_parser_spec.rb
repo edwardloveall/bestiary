@@ -1,5 +1,46 @@
 module Bestiary
   RSpec.describe Parsers::Attack do
+    describe '#perform' do
+      it 'returns an Attack attribute' do
+        text = '+2 wounding spear +32/+27/+22/+17 (3d6+17/x3 plus 1 bleed)'
+        damage = Models::Die.new(count: 3, sides: 6, bonus: 17)
+        attack = Attributes::Attack.new(
+          count: 1,
+          title: '+2 wounding spear',
+          bonuses: [32, 27, 22, 17],
+          damage: damage,
+          critical_range: 1,
+          critical_multiplier: 3,
+          additional_effects: ['1 bleed']
+        )
+
+        result = Parsers::Attack.perform(text)
+
+        expect(result).to eq(attack)
+      end
+
+      it 'calls all its method to get proper attributes' do
+        parser = Parsers::Attack.new('')
+        allow(parser).to receive(:count)
+        allow(parser).to receive(:title)
+        allow(parser).to receive(:bonuses)
+        allow(parser).to receive(:damage)
+        allow(parser).to receive(:critical_range)
+        allow(parser).to receive(:critical_multiplier)
+        allow(parser).to receive(:additional_effects)
+
+        parser.perform
+
+        expect(parser).to have_received(:count)
+        expect(parser).to have_received(:title)
+        expect(parser).to have_received(:bonuses)
+        expect(parser).to have_received(:damage)
+        expect(parser).to have_received(:critical_range)
+        expect(parser).to have_received(:critical_multiplier)
+        expect(parser).to have_received(:additional_effects)
+      end
+    end
+
     describe 'count' do
       context 'when it has no explicit number' do
         it 'returns 1' do
