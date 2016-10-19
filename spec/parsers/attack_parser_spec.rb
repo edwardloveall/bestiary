@@ -204,5 +204,51 @@ module Bestiary
         end
       end
     end
+
+    describe '#additional_effects' do
+      it 'returns an array of effects' do
+        text = 'torturous touch +11 touch (2d6 plus 1d6 Dex damage and convulsions)'
+        parser = Parsers::Attack.new(text)
+        effects = ['1d6 Dex damage', 'convulsions']
+
+        result = parser.additional_effects
+
+        expect(result).to eq(effects)
+      end
+
+      context 'when effects are separated by many separators' do
+        it 'returns an array of effects' do
+          text = '2 slams +27 (2d6+12 plus 3d6 electricity or sonic and blindness or deafness)'
+          parser = Parsers::Attack.new(text)
+          effects = ['3d6 electricity', 'sonic', 'blindness', 'deafness']
+
+          result = parser.additional_effects
+
+          expect(result).to eq(effects)
+        end
+      end
+
+      context 'when no damage or critical info precedes the effects' do
+        it 'returns an array of effects' do
+          text = 'tongue –1 touch (sticky tongue)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.additional_effects
+
+          expect(result).to eq(['sticky tongue'])
+        end
+      end
+
+      context 'when there are no additional effects' do
+        it 'returns an empty array' do
+          text = '2 claws +6 (1d4+4)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.additional_effects
+
+          expect(result).to eq([])
+        end
+      end
+    end
   end
 end

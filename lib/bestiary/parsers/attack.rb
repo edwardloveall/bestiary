@@ -75,4 +75,20 @@ class Bestiary::Parsers::Attack
 
     text.sub('x', '').to_i
   end
+
+  def additional_effects
+    phrase_signature = /[\w\s]+/
+    separators = /and|or/
+    plus = /\bplus\s/
+    open_parenthesis = /\(/
+
+    scanner.reset
+    scanner.skip_until(open_parenthesis)
+    scanner.skip(DIE_SIGNATURE)
+    scanner.skip_until(plus)
+
+    text = scanner.scan_until(phrase_signature)
+    return [] if text.nil?
+    text.split(separators).map(&:strip)
+  end
 end
