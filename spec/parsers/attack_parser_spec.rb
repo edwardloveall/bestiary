@@ -144,6 +144,17 @@ module Bestiary
           expect(result).to eq([-1])
         end
       end
+
+      context 'when the attack is against touch' do
+        it 'returns the attack bonus without "touch"' do
+          text = 'tongue –1 touch (sticky tongue)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.bonuses
+
+          expect(result).to eq([-1])
+        end
+      end
     end
 
     describe '#damage' do
