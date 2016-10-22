@@ -5,7 +5,7 @@ module Bestiary
         text = '+2 wounding spear +32/+27/+22/+17 (3d6+17/x3 plus 1 bleed)'
         damage = Models::Die.new(count: 3, sides: 6, bonus: 17)
         attack = Attributes::Attack.new(
-          count: 1,
+          count: 4,
           title: '+2 wounding spear',
           bonuses: [32, 27, 22, 17],
           damage: damage,
@@ -43,13 +43,26 @@ module Bestiary
 
     describe 'count' do
       context 'when it has no explicit number' do
-        it 'returns 1' do
-          text = 'bite +10 (1d6+4)'
-          parser = Parsers::Attack.new(text)
+        context 'there is one attack' do
+          it 'returns the number of bonuses' do
+            text = 'bite +10 (1d6+4)'
+            parser = Parsers::Attack.new(text)
 
-          result = parser.count
+            result = parser.count
 
-          expect(result).to eq(1)
+            expect(result).to eq(1)
+          end
+        end
+
+        context 'there are many attacks' do
+          it 'returns the number of bonuses' do
+            text = '+2 wounding spear +32/+27/+22/+17 (3d6+17/x3 plus 1 bleed)'
+            parser = Parsers::Attack.new(text)
+
+            result = parser.count
+
+            expect(result).to eq(4)
+          end
         end
       end
 

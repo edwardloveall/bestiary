@@ -2,6 +2,8 @@ class Bestiary::Parsers::Attack
   INITIAL_COUNT = /\d+\s/
   DIE_SIGNATURE = /\d+d\d+([+\-]\d+)?/
   FORWARD_SLASH = /\//
+  MASTERWORK_SIGNATURE = /\s?[+\-]\d+/
+  OPEN_PARENTHESIS = /\(/
 
   attr_reader :attack_text, :scanner
 
@@ -28,7 +30,14 @@ class Bestiary::Parsers::Attack
 
   def count
     scanner.reset
-    result = scanner.scan(INITIAL_COUNT) || 1
+    result = scanner.scan(INITIAL_COUNT)
+
+    if result.nil?
+      scanner.skip(MASTERWORK_SIGNATURE)
+      text = scanner.scan_until(OPEN_PARENTHESIS)
+      result = text.count('/') + 1
+    end
+
     result.to_i
   end
 
@@ -41,11 +50,10 @@ class Bestiary::Parsers::Attack
   end
 
   def bonuses
-    masterwork_signature = /\s?[+\-]\d+/
     bonus_number = /[+\-]\d+/
     scanner.reset
     scanner.skip(INITIAL_COUNT)
-    scanner.skip(masterwork_signature)
+    scanner.skip(MASTERWORK_SIGNATURE)
 
     scanner.scan_until(bonus_number)
     matches = [scanner.matched]
@@ -96,10 +104,9 @@ class Bestiary::Parsers::Attack
     phrase_signature = /[\w\s]+/
     separators = /and|or/
     plus = /\bplus\s/
-    open_parenthesis = /\(/
 
     scanner.reset
-    scanner.skip_until(open_parenthesis)
+    scanner.skip_until(OPEN_PARENTHESIS)
     scanner.skip(DIE_SIGNATURE)
     scanner.skip_until(plus)
 
