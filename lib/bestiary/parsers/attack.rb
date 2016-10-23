@@ -104,10 +104,12 @@ class Bestiary::Parsers::Attack
     phrase_signature = /[\w\s]+/
     separators = /and|or/
     plus = /\bplus\s/
+    critical_info = /[\d\-x\/]+/
 
     scanner.reset
     scanner.skip_until(OPEN_PARENTHESIS)
     scanner.skip(DIE_SIGNATURE)
+    scanner.skip(critical_info)
     scanner.skip_until(plus)
 
     text = scanner.scan_until(phrase_signature)

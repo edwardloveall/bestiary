@@ -313,6 +313,17 @@ module Bestiary
 
           expect(result).to eq([])
         end
+
+        context 'but critical info' do
+          it 'returns an empty array' do
+            text = '+5 holy cold iron club +48/+43/+38/+33 (1d8+18/15–20)'
+            parser = Parsers::Attack.new(text)
+
+            result = parser.additional_effects
+
+            expect(result).to eq([])
+          end
+        end
       end
     end
   end
