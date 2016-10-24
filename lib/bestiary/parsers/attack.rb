@@ -42,10 +42,10 @@ class Bestiary::Parsers::Attack
   end
 
   def title
-    bonus_sign = /\s[+\-]/
+    end_of_title = /\s([+\-]|\()/
     scanner.reset
     scanner.skip(INITIAL_COUNT)
-    text = scanner.scan_until(bonus_sign)
+    text = scanner.scan_until(end_of_title)
     text.sub(scanner.matched, '')
   end
 

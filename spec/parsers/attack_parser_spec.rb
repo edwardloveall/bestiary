@@ -76,6 +76,18 @@ module Bestiary
           expect(result).to eq(2)
         end
       end
+
+      context 'when it is a swarm attack' do
+        it 'returns 1' do
+          text = 'swarm (3d6)'
+
+          parser = Parsers::Attack.new(text)
+
+          result = parser.count
+
+          expect(result).to eq(1)
+        end
+      end
     end
 
     describe 'title' do
@@ -96,6 +108,17 @@ module Bestiary
           result = parser.title
 
           expect(result).to eq('+1 dagger')
+        end
+      end
+
+      context 'when it is a swarm attack' do
+        it 'returns swarm' do
+          text = 'swarm (3d6)'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.title
+
+          expect(result).to eq('swarm')
         end
       end
 
