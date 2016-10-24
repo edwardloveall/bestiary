@@ -1,6 +1,7 @@
 class Bestiary::Parsers::Melee
   SCANNED_TOO_FAR = /\A(Special Attack|STATISTICS|SPECIAL ABILITIES|TACTICS)/i
   MELEE_SIGNATURE = /\AMelee /
+  SEPARATOR = /, | or | and /
 
   attr_accessor :creature
 
@@ -10,6 +11,25 @@ class Bestiary::Parsers::Melee
 
   def initialize(creature)
     @creature = creature
+  end
+
+  def perform
+    return if parent_element.nil?
+    scanner = StringScanner.new(parent_text)
+    scanner.skip(/Melee /)
+    attacks = []
+    while !scanner.eos?
+      attack = scanner.scan_until(/\)|\Z/)
+      if attack.count('(') != attack.count(')')
+        next
+      end
+      attacks << attack.dup
+      scanner.skip(SEPARATOR)
+    end
+
+    attacks.map do |attack|
+      Bestiary::Parsers::Attack.perform(attack)
+    end
   end
 
   def parent_element
