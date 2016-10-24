@@ -84,6 +84,20 @@ module Bestiary
           expect(result).to eq(attacks)
         end
       end
+
+      context 'when a attacks additional effects outside the parenthesis' do
+        it 'returns an array of Attack attributes' do
+          html = <<-HTML
+          <p class="stat-block-1"><b>Melee</b> 5 tentacles +7 (1d4+2) plus grab</p>
+          HTML
+          dom = parse_html(html)
+          attacks = [tentacles]
+
+          result = Parsers::Melee.perform(dom)
+
+          expect(result).to eq(attacks)
+        end
+      end
     end
 
     describe '#parent_text' do

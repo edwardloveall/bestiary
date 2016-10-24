@@ -23,6 +23,9 @@ class Bestiary::Parsers::Melee
       if attack.count('(') != attack.count(')')
         next
       end
+      if !scanner.exist?(/\)/)
+        attack += scanner.scan_until(/\Z/)
+      end
       attacks << attack.dup
       scanner.skip(SEPARATOR)
     end
