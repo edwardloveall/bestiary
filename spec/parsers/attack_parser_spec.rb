@@ -88,6 +88,18 @@ module Bestiary
           expect(result).to eq(1)
         end
       end
+
+      context 'when it is a non-damaging attack' do
+        it 'returns 1' do
+          text = 'slime squirt +4 ranged touch'
+
+          parser = Parsers::Attack.new(text)
+
+          result = parser.count
+
+          expect(result).to eq(1)
+        end
+      end
     end
 
     describe 'title' do

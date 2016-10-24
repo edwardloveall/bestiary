@@ -34,7 +34,7 @@ class Bestiary::Parsers::Attack
 
     if result.nil?
       scanner.skip(MASTERWORK_SIGNATURE)
-      text = scanner.scan_until(OPEN_PARENTHESIS)
+      text = scanner.scan_until(OPEN_PARENTHESIS).to_s
       result = text.count('/') + 1
     end
 
