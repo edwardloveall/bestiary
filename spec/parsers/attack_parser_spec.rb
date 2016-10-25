@@ -360,6 +360,17 @@ module Bestiary
           end
         end
       end
+
+      context 'when there is no explicit damage' do
+        it 'returns an additional effect' do
+          text = 'slime squirt +4 ranged touch'
+          parser = Parsers::Attack.new(text)
+
+          result = parser.additional_effects
+
+          expect(result).to eq(['ranged touch'])
+        end
+      end
     end
   end
 end

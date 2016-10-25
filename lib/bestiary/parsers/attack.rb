@@ -101,19 +101,22 @@ class Bestiary::Parsers::Attack
   end
 
   def additional_effects
-    phrase_signature = /[\w\s]+/
+    plus = /\ssulp/
     separators = /and|or/
-    plus = /\bplus\s/
-    critical_info = /[\d\-x\/]+/
+    reversed_text = attack_text.reverse
+    reverse_scanner = StringScanner.new(reversed_text)
 
-    scanner.reset
-    scanner.skip_until(OPEN_PARENTHESIS)
-    scanner.skip(DIE_SIGNATURE)
-    scanner.skip(critical_info)
-    scanner.skip_until(plus)
+    reverse_scanner.skip(/\)/)
+    text = reverse_scanner.scan_until(plus)
+    if text.nil?
+      text = reverse_scanner.scan(/[a-zA-Z\s]+/)
+    end
 
-    text = scanner.scan_until(phrase_signature)
     return [] if text.nil?
-    text.split(separators).map(&:strip)
+
+    text.sub(plus, '')
+        .reverse
+        .split(separators)
+        .map(&:strip)
   end
 end
