@@ -98,6 +98,20 @@ module Bestiary
           expect(result).to eq(attacks)
         end
       end
+
+      context 'when a attacks additional effects outside the parenthesis' do
+        it 'returns an array of Attack attributes' do
+          html = <<-HTML
+          <p class="stat-block-1"><b>Melee</b> slime squirt +4 ranged touch</p>
+          HTML
+          dom = parse_html(html)
+          attacks = [slime_squirt]
+
+          result = Parsers::Melee.perform(dom)
+
+          expect(result).to eq(attacks)
+        end
+      end
     end
 
     describe '#parent_text' do
@@ -229,6 +243,16 @@ module Bestiary
         bonuses: [5],
         damage: Models::Die.new(count: 2, sides: 6, bonus: 4),
         additional_effects: ['1d4 acid', 'grab']
+      )
+    end
+
+    def slime_squirt
+      Attributes::Attack.new(
+        count: 1,
+        title: 'slime squirt',
+        bonuses: [4],
+        damage: nil,
+        additional_effects: ['ranged touch']
       )
     end
   end
