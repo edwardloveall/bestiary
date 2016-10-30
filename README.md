@@ -6,4 +6,4 @@ The basic strategy is to take each html file, [extract each creature](https://gi
 
 ## License
 
-Licensed under the Open Game License.
+Licensed under the [Open Game License](https://github.com/edwardloveall/bestiary/blob/master/LICENSE).
