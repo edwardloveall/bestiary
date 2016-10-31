@@ -1,8 +1,18 @@
 class Bestiary::Parsers::Space
   attr_accessor :creature
 
+  def self.perform(creature)
+    new(creature).perform
+  end
+
   def initialize(creature)
     @creature = creature
+  end
+
+  def perform
+    return if parent_element.nil?
+    text = parent_element.text
+    feet(text)
   end
 
   def parent_element
