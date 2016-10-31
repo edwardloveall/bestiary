@@ -14,4 +14,11 @@ class Bestiary::Parsers::Space
       end
     end
   end
+
+  def feet(text)
+    space = text.split(/[;,]/).first
+    space.sub('-1/2', '.5')
+         .sub('Space ', '')
+         .to_f
+  end
 end

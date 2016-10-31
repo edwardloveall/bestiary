@@ -31,5 +31,27 @@ module Bestiary
         end
       end
     end
+
+    describe '#feet' do
+      it 'returns the space in feet that the creature occupies' do
+        text = 'Space 15 ft.; Reach 10 ft.'
+        parser = Parsers::Space.new(nil)
+
+        result = parser.feet(text)
+
+        expect(result).to eq(15)
+      end
+
+      context 'when there are half feet involved' do
+        it 'returns a fractional number' do
+          text = 'Space 2-1/2 ft.; Reach 0 ft.'
+          parser = Parsers::Space.new(nil)
+
+          result = parser.feet(text)
+
+          expect(result).to eq(2.5)
+        end
+      end
+    end
   end
 end
