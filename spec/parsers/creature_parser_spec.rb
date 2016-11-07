@@ -63,6 +63,22 @@ module Bestiary
             end
           end
         end
+
+        context 'when the challenge rating is a fraction' do
+          it 'returns DocumentFragments in an array' do
+            html = fixture_load('gremlin.html')
+            dom = parse_html(html)
+
+            result = Parsers::Creature.perform(dom)
+
+            expect(result).to be_a(Array)
+            expect(result.count).to eq(3)
+
+            result.each do |creature|
+              expect(creature).to be_a(Nokogiri::HTML::DocumentFragment)
+            end
+          end
+        end
       end
     end
   end

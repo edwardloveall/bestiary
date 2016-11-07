@@ -34,7 +34,7 @@ class Bestiary::Parsers::Creature
   def headers
     content = dom.at('div.body')
     content.css('p').select do |stat|
-      stat.text.strip.match(/CR\s?\d+\z/)
+      stat.text.strip.match(/CR\s?\d+(\/\d)?\Z/)
     end
   end
 
