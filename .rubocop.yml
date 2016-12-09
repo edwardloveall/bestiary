@@ -486,7 +486,7 @@ Style/CommentIndentation:
 
 Style/ConditionalAssignment:
   Enabled: true
-  EnforcedStyle: assign_to_condition
+  EnforcedStyle: assign_inside_condition
   SingleLineConditionsOnly: true
 
 Style/ConstantName:
