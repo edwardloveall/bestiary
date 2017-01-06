@@ -24,6 +24,19 @@ module Bestiary
           expect(result).to eq(14)
         end
       end
+
+      context 'when CMB has conditional stats' do
+        it 'returns only the base CMD' do
+          html = <<-HTML
+          <p class="stat-block-1"><b>Base Atk</b> +0; <b>CMB</b> –1; <b>CMD</b> 11</p>
+          HTML
+          dom = parse_html(html)
+
+          result = Parsers::Cmb.perform(dom)
+
+          expect(result).to eq(-1)
+        end
+      end
     end
   end
 end

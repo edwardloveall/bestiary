@@ -13,7 +13,7 @@ class Bestiary::Parsers::Cmb
     return if parent_element.nil?
     text = parent_element.text
     sanitized = text.gsub(/–/, '-')
-    matches = sanitized.match(/CMB ([–+]\d+)/)
+    matches = sanitized.match(/CMB ([-+]\d+)/)
 
     if matches && matches[1]
       matches[1].to_i
